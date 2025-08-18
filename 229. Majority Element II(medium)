@@ -1,0 +1,109 @@
+//Brute Force
+class Solution {
+    public int majorityElement(int[] nums) {
+
+        int n = nums.length;
+        int count = 0;
+        int ele = 0;
+        for(int i=0;i<n;i++){
+            if(count ==0){
+                count =1;
+                ele = nums[i];
+            }
+            else if(nums[i]==ele){
+                count++;
+            }
+            else{
+                count--;
+            }
+        }
+        int count1 =0;
+        for(int i=0;i<n;i++){
+            if(nums[i]==ele){
+                count1++;
+            }
+        }
+        if(count1>n/2){
+            return ele;
+        }
+        return -1;
+
+        
+    }
+// Better Approach
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        int n = nums.length;
+        List<Integer> result = new ArrayList<>();
+        Map<Integer,Integer> map = new HashMap<>();
+        int min = n/3+1;
+
+        for(int i=0;i<n;i++){
+            map.put(nums[i],map.getOrDefault(nums[i],0)+1);
+            if(map.get(nums[i])==min) result.add(nums[i]);
+            if(result.size()==2) break;
+        }
+        return result;
+    }
+}
+//optimal approach
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        int n = nums.length;
+     
+        int cnt1=0,cnt2=0;
+        int ele1=0,ele2=0;
+
+        for(int i=0;i<n;i++){
+            if(cnt1==0 && nums[i]!=ele2){
+                cnt1=1;
+                ele1=nums[i];
+            }
+            else if(cnt2==0 && nums[i]!=ele1){
+                cnt2=1;
+                ele2=nums[i];
+            }
+            else if(nums[i]==ele1){
+                cnt1++;
+            }
+            else if(nums[i]==ele2){
+                cnt2++;
+            }
+            else{
+                cnt1--;
+                cnt2--;
+            }
+            
+        }
+        int count1=0,count2=0;
+        for(int i=0;i<n;i++){
+            if(nums[i]==ele1){
+                count1++;
+            }
+            if(nums[i]==ele2){
+                count2++;
+            }
+        }
+        int mini = n / 3 + 1;
+        
+        // List of answers
+        List<Integer> result = new ArrayList<>(); 
+
+        /*Add elements to the result vector
+        if they appear more than n/3 times*/
+        if (count1 >= mini) {
+            result.add(ele1);
+        }
+        if (count2 >= mini && ele1 != ele2) {
+            // Avoid adding duplicate if el1 == el2
+            result.add(ele2); 
+        }
+
+        
+        return result;
+
+        
+        
+    }
+}
+}
