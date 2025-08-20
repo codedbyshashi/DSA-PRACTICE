@@ -1,0 +1,64 @@
+// Brute force
+class Solution {
+    public int[] findMissingRepeatingNumbers(int[] nums) {
+        int n = nums.length; // Size of the array
+        int repeating = -1, missing = -1;
+        for (int i = 1; i <= n; i++) {
+            int cnt = 0;
+            for (int j = 0; j < n; j++) {
+                if (nums[j] == i) cnt++;
+            }
+            if (cnt == 2) repeating = i;
+            else if (cnt == 0) missing = i;
+            if (repeating != -1 && missing != -1)
+                break;
+        }
+        return new int[] {repeating, missing};
+    }
+}
+// Better Approach
+class Solution {
+    public int[] findMissingRepeatingNumbers(int[] nums) {
+        int n = nums.length;
+        int[] hash = new int[n+1];
+
+        for(int i=0;i<n;i++){
+            hash[nums[i]]++;
+
+            
+        }
+        int missing=-1,repeating=-1;
+
+        for(int i=1;i<=n;i++){
+            if(hash[i]==2) repeating=i;
+            else if(hash[i]==0) missing = i;
+
+            if(repeating!=-1 && missing!=-1) break;
+        }
+
+        return new int[]{repeating,missing};
+
+        
+
+    }
+}
+//optimal Approach
+class Solution {
+    public int[] findMissingRepeatingNumbers(int[] nums) {
+        long n  = nums.length;
+        long sn = (n*(n+1))/2;
+        long s2n = (n*(n+1)*(2*n+1))/6;
+        long S =0,S2=0;
+        for(int i=0;i<n;i++){
+            S +=nums[i];
+            S2 +=(long) nums[i]*(long) nums[i];
+        }
+        long val1 = S-sn;
+        long val2 = S2-s2n;
+        val2 = val2/val1;
+        long x = (val1+val2)/2;
+        long y = x-val1;
+        return new int[]{(int)x,(int)y};
+
+    }
+}
