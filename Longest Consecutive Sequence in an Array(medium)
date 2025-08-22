@@ -1,0 +1,89 @@
+// BRUTE FORCE
+class Solution {
+
+
+    private boolean ls(int[] arr,int a){
+        int n = arr.length;
+
+        for(int i=0;i<n;i++){
+            if(arr[i]==a){
+                return true;
+            }
+            
+        }
+        return false;
+    }
+    public int longestConsecutive(int[] nums) {
+        int n = nums.length;
+        int longest = 1;
+
+        for(int i=0;i<n;i++){
+           int  x = nums[i];
+
+            int count =1;
+            while(ls(nums,x+1)== true){
+                x +=1;
+                count++;
+            }
+            longest = Math.max(longest,count);
+        }
+        return longest;
+    }
+}
+===================================================
+// BETTER APPROACH
+class Solution {
+    public int longestConsecutive(int[] nums) {
+
+        int n = nums.length;
+        if(n==0) return 0;
+        Arrays.sort(nums);
+        int count = 0;
+        int longest = 1;
+        int lastSmall = Integer.MIN_VALUE;
+
+        for(int i=0;i<n;i++){
+            if(nums[i]-1 == lastSmall){
+                count +=1;
+                lastSmall = nums[i];
+            }
+            else if(nums[i]!=lastSmall){
+                count =1;
+                lastSmall = nums[i];
+            }
+            longest = Math.max(count,longest);
+        }
+        return longest;
+
+        
+    }
+}
+======================================================
+//OPTIMAL APPROACH
+
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        int n = nums.length;
+        if(n==0) return 0;
+        int longest =1;
+        Set<Integer> ans = new HashSet<>();
+        for(int i:nums){
+            ans.add(i);
+        }
+        for(int it:ans){
+            if(!ans.contains(it-1)){
+                int count = 1;
+                int x = it;
+                while(ans.contains(x+1)){
+                    count +=1;;
+                    x +=1;
+                }
+                longest = Math.max(count,longest);
+            }
+        }
+        return longest;
+
+        
+    }
+
+}
