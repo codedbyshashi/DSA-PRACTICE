@@ -1,0 +1,45 @@
+// BRUTE FORCE
+class Solution {
+    public int longestSubarray(int[] nums, int k) {
+        int n = nums.length;
+
+        int len  = 0;
+        for(int i =0;i<n;i++){
+            int sum =0;
+            for(int j=i;j<n;j++){
+                sum +=nums[j];
+                if(sum == k){
+                    len = Math.max(len,j-i+1);
+                }
+            }
+        }
+        return len;
+       
+    }
+}
+// OPTIMAL
+class Solution {
+    public int longestSubarray(int[] nums, int k) {
+        int n = nums.length;
+        int maxLen = 0;
+        Map<Integer,Integer> mpp = new HashMap<>();
+        int sum =0;
+
+        for(int i=0;i<n;i++){
+            sum +=nums[i];
+            if(sum == k){
+                maxLen = Math.max(maxLen,i+1);
+            }
+            int rem = sum-k;
+            if(mpp.containsKey(rem)){
+                int len = i-mpp.get(rem);
+                maxLen = Math.max(maxLen,len);
+            }
+            if(!mpp.containsKey(sum)){
+                mpp.put(sum,i);
+            }
+        }
+        return maxLen;
+       
+    }
+}
