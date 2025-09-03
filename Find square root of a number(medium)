@@ -1,0 +1,42 @@
+//BRUTE FORCE(LINEAR SEARCH)
+class Solution {
+  /* Function to compute the floor of
+  square root of a given integer */
+  public long floorSqrt(long n) {
+    long ans = 0;
+
+    // Linear search in the answer space
+    for (long i = 1; i <= n; i++) {
+      long val = i * i;
+
+      // Check if val is less than or equal to n
+      if (val <= (long) n) {
+        // Update ans to current value of i
+        ans = (int) i;
+      } else {
+        break;
+      }
+    }
+
+    // Return the computed floor of square root
+    return ans;
+  }
+}
+OPTIMAL SOLUTION(BINARY SEARCH)
+class Solution {
+  public long floorSqrt(long n) {
+    long ans = 0;
+    long low = 0, high = n;
+    while (low <= high) {
+      long mid = (low + high) / 2;
+      long val = mid * mid;
+      if (val <= n) {
+        ans = mid;
+        low = mid + 1;
+      } else {
+        high = mid - 1;
+      }
+    }
+    return ans;
+  }
+}
