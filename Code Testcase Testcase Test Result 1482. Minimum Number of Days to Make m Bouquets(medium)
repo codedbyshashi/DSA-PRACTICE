@@ -1,0 +1,77 @@
+// BRUTE FORCE(LINEAR SEARCH)
+class Solution {
+    private int possible(int[] nums, int bouq, int adj, int n, int day) {
+        int count = 0, bouqC = 0;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] <= day) {
+                count++;
+            } else {
+                bouqC += (count / adj);
+                count = 0;
+            }
+        }
+        bouqC += (count / adj);
+        return bouqC;
+    }
+
+    public int minDays(int[] bloomDay, int m, int k) {
+        int n = bloomDay.length;
+        if (m * k > n)
+            return -1;
+        int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            max = Math.max(max, bloomDay[i]);
+            min = Math.min(min, bloomDay[i]);
+        }
+        for (int i = min; i <= max; i++) {
+            if (possible(bloomDay, m, k, n, i) >= m) {
+                return i;
+            }
+        }
+        return -1;
+
+    }
+=================================================================================
+OPTIMAL SOLUTION(BINARY SEARCH)
+class Solution {
+    private int possible(int[] nums, int bouq, int adj, int n, int day) {
+        int count = 0, bouqC = 0;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] <= day) {
+                count++;
+            } else {
+                bouqC += (count / adj);
+                count = 0;
+            }
+        }
+        bouqC += (count / adj);
+        return bouqC;
+    }
+
+    public int minDays(int[] bloomDay, int m, int k) {
+        int n = bloomDay.length;
+        if (m * k > n)
+            return -1;
+        int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            max = Math.max(max, bloomDay[i]);
+            min = Math.min(min, bloomDay[i]);
+        }
+        int low = min, high = max;
+        int ans = -1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (possible(bloomDay, m, k, n, mid) >= m) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+
+        }
+
+        return ans;
+
+    }
+}
+}
