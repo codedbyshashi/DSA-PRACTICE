@@ -1,0 +1,65 @@
+//BRUTE FORCE(LINEAR SEARCH)
+class Solution {
+    private int sum(int[] arr, int hour) {
+        int n = arr.length;
+        int total = 0;
+        for (int i = 0; i < n; i++) {
+            total += Math.ceil((double) arr[i] / hour);
+        }
+        return total;
+
+    }
+
+    public int minEatingSpeed(int[] piles, int h) {
+        int n = piles.length;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            if (piles[i] > max) {
+                max = piles[i];
+            }
+        }
+        for (int i = 1; i <= max; i++) {
+            if (sum(piles, i) <= h) {
+                return i;
+            }
+        }
+        return -1;
+
+    }
+}
+================================================================================
+OPTIMAL SOLUTION(BINARY SEARCH)
+class Solution {
+    private int sum(int[] arr, int hour) {
+        int n = arr.length;
+        int total = 0;
+        for (int i = 0; i < n; i++) {
+            total += Math.ceil((double) arr[i] / hour);
+        }
+        return total;
+
+    }
+
+    public int minEatingSpeed(int[] piles, int h) {
+        int n = piles.length;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            if (piles[i] > max) {
+                max = piles[i];
+            }
+        }
+        int low = 0, high = max;
+        int ans = 0;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (sum(piles, mid) <= h) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return ans;
+
+    }
+}
