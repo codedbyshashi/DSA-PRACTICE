@@ -1,0 +1,65 @@
+//BRUTE FORCE(with two arrays)
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        int n = nums1.length;
+        int m = nums2.length;
+        int[] ans = new int[n];
+        Arrays.fill(ans,-1);
+        for(int i=0;i<n;i++){
+            boolean found = false;
+            for(int j=0;j<m;j++){
+                if(nums1[i]==nums2[j]){
+                    found=true;
+                }
+                if(found&&nums2[j]>nums1[i]){
+                    ans[i]=nums2[j];
+                    break;
+                }
+            }
+        }
+        return ans;
+        
+    }
+}
+//BRUTE FORCE WITH ONE ARRAY
+class Solution {
+  public int[] nextLargerElement(int[] arr) {
+    int n = arr.length;
+    int[] ans = new int[n];
+    Arrays.fill(ans, -1);
+
+    for (int i = 0; i < n; i++) {
+      for (int j = i + 1; j < n; j++) {
+        if (arr[j] > arr[i]) {
+          ans[i] = arr[j];
+          break;
+        }
+      }
+    }
+    return ans;
+  }
+}
+//OPTIMAL APPROACH FOR AN SINGLE ARRAY
+class Solution {
+    public int[] nextLargerElement(int[] arr) {
+        int n = arr.length;
+        int[] ans = new int[n];
+        Stack<Integer> st = new Stack<>();
+
+        for(int i=n-1;i>=0;i--){
+            int currEle = arr[i];
+            while(!st.isEmpty() && st.peek()<=currEle){
+                st.pop();
+            }
+            if(st.isEmpty()){
+                ans[i]=-1;
+            }
+            else{
+                ans[i] = st.peek();
+            }
+            st.push(currEle);
+        }
+        return ans;
+    
+    }
+}
