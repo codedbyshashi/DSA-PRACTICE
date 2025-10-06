@@ -1,0 +1,54 @@
+//BRUTE FORCE
+class Solution {
+    public double myPow(double x, int n) {
+        double ans = 1.0;
+        long temp = n;
+        if (n < 0) {
+            x = 1 / x;
+            temp = -1L * n;
+        }
+
+        for (int i = 0; i < temp; i++) {
+            ans *= x;
+        }
+        return ans;
+    }
+}
+//OPTIMAL SOLUTION(ITERATIVE)
+class Solution {
+    public double myPow(double x, int n) {
+        double ans = 1;
+        long temp = n;
+        if (n < 0) {
+            x = 1 / x;
+            temp = -1L * n;
+        }
+        if (temp == 0) return 1.0;
+        while (temp > 0) {
+            if (temp % 2==1) {
+                ans *= x;
+                temp = temp - 1;
+            } else {
+                x *=x;
+                temp /= 2;
+            }
+        }
+        return ans;
+    }
+//OPTIMAL SOLUTION(RECURSION)
+class Solution {
+    public double myPow(double x, long n) {
+        if (n < 0) {
+            x = 1 / x;
+            n = -1L* n;
+        }
+        if (n == 0) return 1.0;
+        if(n%2==1){
+            return x*myPow(x,n-1);
+        }
+        else{
+            return myPow(x*x,n/2);
+        }
+    }
+}
+}
