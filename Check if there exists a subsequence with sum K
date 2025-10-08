@@ -1,0 +1,20 @@
+//OPTIMAL APPROACH(RECURSION)
+class Solution {
+  public boolean generate(int ind, int n, int[] nums, int sum) {
+    if (sum == 0) {
+      return true;
+    }
+    if (sum < 0 || ind == n) {
+      return false;
+    }
+    boolean path1 = generate(ind + 1, n, nums, sum - nums[ind]);
+    boolean path2 = generate(ind + 1, n, nums, sum);
+    return path1 || path2;
+  }
+
+  public boolean checkSubsequenceSum(int[] nums, int k) {
+    // your code goes here
+    boolean ans = generate(0, nums.length, nums, k);
+    return ans;
+  }
+}
