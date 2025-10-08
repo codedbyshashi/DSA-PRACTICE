@@ -1,0 +1,18 @@
+//OPTIMAL APPROACH(MEDIUM)
+class Solution {
+    public int generate(int ind,int sum,int n,int[] nums){
+        int count =0;
+        if(sum==0){
+            return 1;
+        }
+        if(sum<0||ind==n){
+            return 0;
+        }
+        return generate(ind + 1, sum - nums[ind],n, nums) + generate(ind + 1, sum, n,nums);
+    }
+    public int countSubsequenceWithTargetSum(int[] nums, int k) {
+        //your code goes here
+        return generate(0,k,nums.length,nums);
+        
+    }
+}
