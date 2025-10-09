@@ -1,0 +1,17 @@
+//OPTIMAL RECURSION
+class Solution {
+    public void generate(int ind,int sum,int n,int[] nums,List<Integer> ans){
+        if(ind==n){
+            ans.add(sum);
+            return;
+        }
+        generate(ind+1,sum+nums[ind],n,nums,ans);
+        generate(ind+1,sum,n,nums,ans);
+    }
+    public List<Integer> subsetSums(int[] nums) {
+        //your code goes here
+        List<Integer> ans = new ArrayList<>();
+        generate(0,0,nums.length,nums,ans);
+        return ans;
+    }
+}
