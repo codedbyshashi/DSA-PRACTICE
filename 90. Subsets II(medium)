@@ -1,0 +1,27 @@
+//OPTIMAL APPROACH(RECURSIVE APPROACH)
+class Solution {
+    public void generate(int ind,List<List<Integer>> ans,List<Integer> current,int[] nums){
+        if(ind==nums.length){
+            ans.add(new ArrayList<>(current));
+            return;
+        }
+        current.add(nums[ind]);
+        generate(ind+1,ans,current,nums);
+        current.remove(current.size()-1);
+        for(int i=ind+1;i<nums.length;i++){
+            if(nums[i]!=nums[ind]){
+                generate(i,ans,current,nums);
+                return;
+            }
+        }
+        generate(nums.length,ans,current,nums);
+    }
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> current = new ArrayList<>();
+        generate(0,ans,current,nums);
+        return ans;
+        
+    }
+}
