@@ -1,0 +1,25 @@
+//OPTIMAL APPROACH(RECURSION APPROACH)
+class Solution {
+    private void generate(int start,int k,int sum,List<Integer> current,List<List<Integer>> ans){
+        if(sum==0&&current.size()==k){
+            ans.add(new ArrayList<>(current));
+            return;
+        }
+        if(sum<=0 || current.size()>k){
+            return;
+        }
+        for(int i = start;i<=9;i++){
+            if(i<=sum){
+                current.add(i);
+                generate(i+1,k,sum-i,current,ans);
+                current.remove(current.size()-1);
+            }
+        }
+    }
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> current = new ArrayList<>();
+        generate(1,k,n,current,ans);
+        return ans;
+    }
+}
