@@ -1,0 +1,34 @@
+class Solution {
+    private boolean func(int ind,int i,int j,char[][] board,String word){
+        if(ind == word.length()){
+            return true;
+        }
+        if(i<0||j<0||i>=board.length||j>=board[0].length||word.charAt(ind)!=board[i][j]){
+            return false;
+        }
+        char temp = board[i][j];
+        board[i][j] = ' ';
+        boolean ans = func(ind+1,i-1,j,board,word)||
+                      func(ind+1,i+1,j,board,word)||
+                      func(ind+1,i,j-1,board,word)||
+                      func(ind+1,i,j+1,board,word);
+        board[i][j] = temp;
+        return ans;
+
+    }
+    public boolean exist(char[][] board, String word) {
+        //your code goes here
+        int n = board.length;
+        int m = board[0].length;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(board[i][j]==word.charAt(0)){
+                    if(func(0,i,j,board,word)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+}
