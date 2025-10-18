@@ -1,0 +1,45 @@
+/*Definition for singly Linked List
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+*/
+
+class Solution {
+    public ListNode deleteNodeWithValueX(ListNode head, int X) {
+        if(head == null){
+            return null;
+        }
+        if(head.val == X){
+            head = head.next;
+            return head;
+        }
+        ListNode temp = head;
+        ListNode prev = null;
+        while(temp!=null){
+            if(temp.val==X){
+                prev.next = temp.next;
+                break;
+            }
+            prev = temp;
+            temp = temp.next;
+        }
+        return head;
+
+    }
+}
