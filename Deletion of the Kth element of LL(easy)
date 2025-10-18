@@ -38,7 +38,7 @@ class Solution {
             count ++;
             if(count ==k){
                 prev.next = prev.next.next;
-                return head;
+               break;
             }
             
             prev = temp;
