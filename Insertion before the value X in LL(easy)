@@ -1,0 +1,38 @@
+/* Definition for singly-linked list.
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode() { this.val = 0; this.next = null; }
+    ListNode(int val) { this.val = val; this.next = null; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+}
+*/
+
+class Solution {
+    public ListNode insertBeforeX(ListNode head, int X, int val) {
+        // Case 1: Empty list
+        if (head == null) return null;
+
+        ListNode newNode = new ListNode(val);
+
+        // Case 2: Need to insert before head
+        if (head.val == X) {
+            newNode.next = head;
+            return newNode; // new head
+        }
+
+        // Case 3: Search for the node before X
+        ListNode temp = head;
+        while (temp != null && temp.next != null) {
+            if (temp.next.val == X) {
+                newNode.next = temp.next;
+                temp.next = newNode;
+                return head; // head doesn’t change
+            }
+            temp = temp.next;
+        }
+
+        // Case 4: X not found → return original list
+        return head;
+    }
+}
