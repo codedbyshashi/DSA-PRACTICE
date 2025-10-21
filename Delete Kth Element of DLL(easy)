@@ -1,0 +1,59 @@
+/*Definition of doubly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode prev;
+
+    ListNode() {
+        val = 0;
+        next = null;
+        prev = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+        prev = null;
+    }
+
+    ListNode(int data1, ListNode next1, ListNode prev1) {
+        val = data1;
+        next = next1;
+        prev = prev1;
+    }
+}
+ */
+
+class Solution {
+  public ListNode deleteKthElement(ListNode head, int k) {
+    if (head == null) {
+      return null;
+    }
+
+    ListNode temp = head;
+    int count = 0;
+    while (temp.next != null) {
+      count++;
+
+      if (count == k) {
+        break;
+      }
+      temp = temp.next;
+    }
+    ListNode prev = temp.prev;
+    ListNode front = temp.next;
+    if (prev == null && front == null) {
+      return null;
+    } else if (prev == null) {
+      head = head.next;
+      head.prev = null;
+    } else if (front == null) {
+      prev.next = null;
+    } else {
+      prev.next = front;
+      front.prev = prev;
+      return head;
+    }
+    return head;
+  }
+}
