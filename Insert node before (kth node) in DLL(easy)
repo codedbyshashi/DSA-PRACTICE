@@ -1,0 +1,52 @@
+/*Definition of doubly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode prev;
+
+    ListNode() {
+        val = 0;
+        next = null;
+        prev = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+        prev = null;
+    }
+
+    ListNode(int data1, ListNode next1, ListNode prev1) {
+        val = data1;
+        next = next1;
+        prev = prev1;
+    }
+}
+ */
+
+class Solution {
+  public ListNode insertBeforeKthPosition(ListNode head, int X, int K) {
+    if (head == null) {
+      return null;
+    }
+    if (K == 1) {
+      ListNode newNode = new ListNode(X, head, null);
+      head.prev = newNode;
+      return newNode;
+    }
+    int count = 0;
+    ListNode temp = head;
+    while (temp != null) {
+      count++;
+      if (count == K) {
+        break;
+      }
+      temp = temp.next;
+    }
+    ListNode back = temp.prev;
+    ListNode newNode = new ListNode(X, temp, back);
+    back.next = newNode;
+    temp.prev = newNode;
+    return head;
+  }
+}
