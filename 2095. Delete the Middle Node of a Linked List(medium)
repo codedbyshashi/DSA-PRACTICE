@@ -1,0 +1,70 @@
+// Brute Force
+/*Definition of singly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+
+class Solution {
+  public ListNode deleteMiddle(ListNode head) {
+    if (head == null || head.next == null) return null;
+    ListNode temp = head;
+    int count = 0;
+    while (temp != null) {
+      count++;
+      temp = temp.next;
+    }
+    temp = head;
+    int midIndex = (count / 2);
+    while (temp != null && temp.next != null) {
+      midIndex--;
+      if (midIndex == 0) {
+        temp.next = temp.next.next;
+      }
+
+      temp = temp.next;
+    }
+    return head;
+  }
+}
+// OPTIMAL APPROACH(the hare and tortoise approach(slow and fast pointer))
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteMiddle(ListNode head) {
+        if(head==null || head.next==null) return null;
+        ListNode slow = head;
+        ListNode fast = head.next.next;
+        while(fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        slow.next = slow.next.next;
+        return head;
+        
+    }
+}
