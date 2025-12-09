@@ -1,0 +1,120 @@
+// Brute Force
+/*Definition of singly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+
+
+ class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    Set<ListNode> mpp = new HashSet<>();
+    ListNode temp = headA;
+    while(temp!=null){
+        mpp.add(temp);
+        temp = temp.next;
+    }
+    temp = headB;
+    while(temp!=null){
+        if(mpp.contains(temp)){
+            return temp;
+        }
+    }
+    return null;
+        
+    }
+}
+// Better Approach
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    private ListNode collisionPoint(ListNode headA,ListNode headB,int diff){
+        ListNode temp1 = headA;
+        while(diff!=0){
+            diff--;
+            temp1 = temp1.next;
+        }
+        ListNode temp2 = headB;
+        while(temp1!=temp2){
+            temp1 = temp1.next;
+            temp2 = temp2.next;
+        }
+        return temp1;
+    }
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode temp1 = headA;
+        int count1 = 0;
+        while(temp1!= null){
+            count1++;
+            temp1 = temp1.next;
+        }
+        ListNode temp2 = headB;
+        int count2 = 0;
+        while(temp2!= null){
+            count2++;
+            temp2 = temp2.next;
+        }
+        int d1 = count1-count2;
+        int d2 = count2-count1;
+        if(count1>count2){
+            return collisionPoint(headA,headB,d1);
+        }
+        else{
+            return collisionPoint(headB,headA,d2);
+        }
+    }
+}
+// Optimal Approach
+class Solution {
+    // Function to find the intersection node of two linked lists
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        // Edge case
+        if (headA == null || headB == null) return null;
+
+        // Initialize two pointers to traverse the lists
+        ListNode d1 = headA;
+        ListNode d2 = headB;
+
+        // Traverse both lists until the pointers meet
+        while (d1 != d2) {
+            // Move both the pointers by one place
+            d1 = d1.next;
+            d2 = d2.next;
+
+            // If intersection is found
+            if (d1 == d2) return d1;
+
+            // If either of the two pointers reaches end, place at the front of next linked list 
+            if (d1 == null) d1 = headB;
+            if (d2 == null) d2 = headA;
+        }
+
+        // Return the intersection node
+        return d1;
+    }
+}
