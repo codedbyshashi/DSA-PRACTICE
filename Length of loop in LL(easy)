@@ -1,0 +1,103 @@
+// BRUTE FORCE
+/*Definition of singly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+
+ class Solution {
+     public int findLengthOfLoop(ListNode head) {
+        if(head == null){
+            return 0;
+        }
+        Map<ListNode,Integer> mpp = new HashMap<>();
+        ListNode temp = head;
+        int timer = 1;
+        while(temp!=null){
+            if(mpp.containsKey(temp)){
+                return timer-mpp.get(temp);
+            }
+            
+            mpp.put(temp,timer);
+            temp = temp.next;
+            timer++;
+        }
+        return 0;
+
+     }
+ }
+// OPTIMAL SOLUTION
+/*Definition of singly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+
+ class Solution {
+     int findLength(ListNode slow, ListNode fast) {
+        // Count to keep track of nodes encountered in loop
+        int cnt = 1;
+        
+        // Move fast by one step
+        fast = fast.next;
+        
+        // Traverse fast till it reaches back to slow
+        while (slow != fast) {
+            /* At each node 
+            increase count by 1
+            move fast forward 
+            by one step */
+            cnt++;
+            fast = fast.next;
+        }
+        return cnt;
+     }
+     public int findLengthOfLoop(ListNode head) {
+        if(head==null){
+            return 0;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast){
+               return findLength(slow, fast);
+            }
+        }
+        return 0;
+
+     }
+ }
