@@ -1,0 +1,56 @@
+//BRUTE FORCE
+/*Definition for singly Linked List
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode child;
+
+    ListNode() {
+        val = 0;
+        next = null;
+        child = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+        child = null;
+    }
+
+    ListNode(int data1, ListNode next1, ListNode next2) {
+        val = data1;
+        next = next1;
+        child = next2;
+    }
+}
+*/
+class Solution {
+    public ListNode convertToLinkedList(List<Integer> arr){
+        if(arr.size()==0){
+            return null;
+        }
+        ListNode dummy = new ListNode(-1);
+        ListNode temp = dummy;
+        for(int i=0;i<arr.size();i++){
+            temp.child = new ListNode(arr.get(i));
+            temp = temp.child;
+        }
+        return dummy.child;
+    }
+    public ListNode flattenLinkedList(ListNode head) {
+        List<Integer> arr = new ArrayList<>();
+        while(head!=null){
+            ListNode t2 = head;
+            while(t2!=null){
+                arr.add(t2.val);
+                t2 = t2.child;
+            }
+            head = head.next;
+        }
+        Collections.sort(arr);
+        ListNode convert = convertToLinkedList(arr);
+        return convert;
+
+
+    }
+}
