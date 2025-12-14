@@ -1,0 +1,90 @@
+// BRUTE FORCE
+class Solution {
+    // Function to sort Linked List
+    public ListNode sortList(ListNode head) {
+        // ArrayList to store node values
+        List<Integer> arr = new ArrayList<>();
+
+        // Temporary pointer to traverse the linked list
+        ListNode temp = head;
+
+        /*Traverse linked list and
+        store node values in the ArrayList*/
+        while (temp != null) {
+            arr.add(temp.val);
+            temp = temp.next;
+        }
+
+        // Sort ArrayList containing node values
+        Collections.sort(arr);
+
+        /*Reassign sorted values
+        to linked list nodes*/
+        temp = head;
+        for (int val : arr) {
+            // Update the node's data
+            temp.val = val;
+            // Move to the next node
+            temp = temp.next;
+        }
+
+        // Return the head
+        return head;
+    }
+}
+// OPTIMAL SOLUTION
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode findMiddle(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while(fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+    public ListNode mergeLinkedList(ListNode LL1,ListNode LL2){
+        ListNode dummy = new ListNode(-1);
+        ListNode temp = dummy;
+        while(LL1!=null && LL2!=null){
+            if(LL1.val<LL2.val){
+                temp.next = new ListNode(LL1.val);
+                LL1 = LL1.next;
+            }
+            else{
+                temp.next = new ListNode(LL2.val);
+                LL2 = LL2.next;
+            }
+            temp = temp.next;
+        }
+        if(LL1!=null){
+            temp.next = LL1;
+        }
+        else{
+            temp.next = LL2;
+        }
+        return dummy.next;
+    }
+    public ListNode sortList(ListNode head) {
+        if(head==null || head.next==null){
+            return head;
+        }
+        ListNode middle = findMiddle(head);
+        ListNode right = middle.next;
+        middle.next = null;
+        ListNode left = head;
+        left = sortList(left);
+        right = sortList(right);
+        return mergeLinkedList(left,right);
+    }
+}
