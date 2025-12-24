@@ -1,0 +1,17 @@
+class Solution {
+    public int singleNumber(int[] nums) {
+        //your code goes here
+        Map<Integer,Integer> mpp = new HashMap<>();
+        for(int num:nums){
+            mpp.put(num,mpp.getOrDefault(num,0)+1);
+        }
+        for(Map.Entry<Integer,Integer> map:mpp.entrySet()){
+            if(map.getValue()==1){
+                return map.getKey();
+            }
+        }
+        return -1;
+
+
+    }
+}
